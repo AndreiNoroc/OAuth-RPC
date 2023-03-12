@@ -1,0 +1,42 @@
+1. Pentru utilizarea proiectului sunt necesare urmatoarele comenzi:
+  * sudo apt install rpcbind
+  * sudo /etc/init.d/rpcbind start
+
+2. Pentru verificarea cu checkerul sunt necesare urmatoarele:
+  * comanda pentru generarea fisierelor cu ajutorul Makefile-ului: make
+  * comanda pentru rularea checker-ului: ./check.sh all (toate testele) sau ./check.sh _nr_test_ (pentru un test anume)
+  * comanda pentru stergerea fisierelor generate: make clean
+
+3. Pentru inceput:
+  * am generat fisierul cu rpcgen -C oauth.x
+  * am copiat main-ul din oauth_svc.c in oauth_rpc_server.c
+  * am generat restul fisierelor separat (se poate observa in Makefile), in special oauth_svc.h (care l-am inclus ca header in fisierul de server)
+
+4. oauth.x:
+  * am definit structurile si procedurile necesare pe parcusul aplicatiei in rpc
+
+5. user_data.h:
+  * am definit clasele ajutatoare pentru retinerea informatiilor
+
+5. Client:
+  * am deschis fisierul de operatii, unde am citit rand cu rand
+  * am verificat daca este un request sau o operatie
+  * in cazul unui request am parcurs urmatorul flow:
+    - am generat jetonul de autorizare daca utilizatorul exista
+    - am semnat jetonul si am atribuit permisiunile corespunzatoare clientului
+    - am generat jetonul de acces si am retinut informatiile necesare
+    - am afisat informatiile cerute
+  * in cazul unei operatii:
+    - am apelat procedura de validare, unde am verificat mai multe aspecte despre posibilitatea executarii operatiei
+
+6. Server:
+  * am deschis fisierele date ca argumente
+  * am citit informatiile si le-am stocat in diferite structuri de date
+  * am implementat procedurile necesare clientului
+  * am prelucrat informatiile citite din fisiere in proceduri
+
+7. Mentionari:
+  * am modificat referintele din teste adaugand un newline la final de fisier
+  * am modificat readme lasand doar valabilitatea fara text
+  * am adaugat in checker parametrii necesari
+  
