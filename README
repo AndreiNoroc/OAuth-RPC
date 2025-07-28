@@ -1,42 +1,115 @@
-1. Pentru utilizarea proiectului sunt necesare urmatoarele comenzi:
-  * sudo apt install rpcbind
-  * sudo /etc/init.d/rpcbind start
+# OAuth RPC Project
 
-2. Pentru verificarea cu checkerul sunt necesare urmatoarele:
-  * comanda pentru generarea fisierelor cu ajutorul Makefile-ului: make
-  * comanda pentru rularea checker-ului: ./check.sh all (toate testele) sau ./check.sh _nr_test_ (pentru un test anume)
-  * comanda pentru stergerea fisierelor generate: make clean
+## Prerequisites
 
-3. Pentru inceput:
-  * am generat fisierul cu rpcgen -C oauth.x
-  * am copiat main-ul din oauth_svc.c in oauth_rpc_server.c
-  * am generat restul fisierelor separat (se poate observa in Makefile), in special oauth_svc.h (care l-am inclus ca header in fisierul de server)
+To run this project, the following dependencies and setup steps are required:
 
-4. oauth.x:
-  * am definit structurile si procedurile necesare pe parcusul aplicatiei in rpc
+```bash
+sudo apt install rpcbind
+sudo /etc/init.d/rpcbind start
+```
 
-5. user_data.h:
-  * am definit clasele ajutatoare pentru retinerea informatiilor
+---
 
-5. Client:
-  * am deschis fisierul de operatii, unde am citit rand cu rand
-  * am verificat daca este un request sau o operatie
-  * in cazul unui request am parcurs urmatorul flow:
-    - am generat jetonul de autorizare daca utilizatorul exista
-    - am semnat jetonul si am atribuit permisiunile corespunzatoare clientului
-    - am generat jetonul de acces si am retinut informatiile necesare
-    - am afisat informatiile cerute
-  * in cazul unei operatii:
-    - am apelat procedura de validare, unde am verificat mai multe aspecte despre posibilitatea executarii operatiei
+## Using the Checker
 
-6. Server:
-  * am deschis fisierele date ca argumente
-  * am citit informatiile si le-am stocat in diferite structuri de date
-  * am implementat procedurile necesare clientului
-  * am prelucrat informatiile citite din fisiere in proceduri
+To compile, test, and clean up the project using the provided checker scripts:
 
-7. Mentionari:
-  * am modificat referintele din teste adaugand un newline la final de fisier
-  * am modificat readme lasand doar valabilitatea fara text
-  * am adaugat in checker parametrii necesari
-  
+### 1. Compile the project using the Makefile:
+
+```bash
+make
+```
+
+### 2. Run the checker:
+
+* To run **all tests**:
+
+  ```bash
+  ./check.sh all
+  ```
+
+* To run a **specific test** (e.g., test number 3):
+
+  ```bash
+  ./check.sh 3
+  ```
+
+### 3. Clean up generated files:
+
+```bash
+make clean
+```
+
+---
+
+## Initial Setup
+
+* The base RPC file was generated using:
+
+  ```bash
+  rpcgen -C oauth.x
+  ```
+
+* The `main` function was copied from `oauth_svc.c` into a new file called `oauth_rpc_server.c`.
+
+* The remaining files were generated separately (as shown in the `Makefile`), including `oauth_svc.h`, which was included as a header in the server file.
+
+---
+
+## File Overview
+
+### `oauth.x`
+
+Defines the RPC structures and procedures required throughout the application.
+
+### `user_data.h`
+
+Includes helper classes for managing and storing user information.
+
+---
+
+## Client Functionality
+
+The client:
+
+* Opens and reads the operations file line by line.
+* Determines whether each line represents a **request** or an **operation**.
+
+### For a Request:
+
+* Checks if the user exists.
+* Generates an **authorization token**.
+* Signs the token and assigns appropriate permissions to the client.
+* Generates an **access token** and stores necessary data.
+* Displays the resulting information.
+
+### For an Operation:
+
+* Calls the validation procedure.
+* Verifies several conditions to determine whether the operation can be executed.
+
+---
+
+## Server Functionality
+
+The server:
+
+* Opens the input files received as command-line arguments.
+* Reads data from the files and stores it in appropriate data structures.
+* Implements the required procedures to interact with the client.
+* Processes and manipulates the data read from the files within these procedures.
+
+---
+
+## Additional Notes
+
+* Modified the test reference files to include a newline at the end.
+* Cleaned up the README content to remove outdated sections, keeping only valid and relevant info.
+* Added necessary parameters to the checker script to support testing.
+
+---
+
+## License
+
+This project is developed for educational purposes and is provided as-is.
